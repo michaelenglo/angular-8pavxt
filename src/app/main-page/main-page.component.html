@@ -1,0 +1,50 @@
+<div class="centerbox">
+  <h1>When will I get my first million dollars?</h1>
+  <div class="questions">
+    <mat-card>
+      <label for="income">What is your annual salary? </label>
+      <input id="income" type="number" [formControl]="incomeCtrl" />
+
+      <label for="income">% income you save? </label>
+      <div>{{ savingsPercentage.valueChanges | async }}</div>
+      <div class="slider-group">
+        <span>0%</span>
+        <input
+          id="income"
+          class="slider"
+          type="range"
+          [formControl]="savingsPercentage"
+          min="1"
+          max="100"
+        />
+        <span>100%</span>
+      </div>
+    </mat-card>
+
+    <hr />
+
+    <div>Your first million dollar will be in:</div>
+    <div class="first-year-total">{{ whatYearToAMillion$ | async }}</div>
+    <div class="first-year-total">
+      ({{ numYearsToAMillion$ | async }} years)
+    </div>
+    <div>Timeline:</div>
+    <div class="slider-group" *ngIf="timeline$ | async as timeline">
+      <span>{{ timeline.startYear }}</span>
+      <input
+        type="range"
+        class="slider"
+        [min]="timeline.startYear"
+        [formControl]="timelineCtrl"
+        [max]="timeline.endYear"
+      />
+      <span>{{ timeline.endYear }}</span>
+    </div>
+    <div *ngIf="selectedYearBreakdown$ | async as selected">
+      <div>{{ selected.year }}</div>
+      <div>Principal: {{ selected.principal }}</div>
+      <div>interest: {{ selected.interest }}</div>
+      <div>total: {{ selected.total }}</div>
+    </div>
+  </div>
+</div>
